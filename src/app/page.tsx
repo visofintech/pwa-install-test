@@ -168,14 +168,19 @@ const handleGet = () => {
       <button
         type="button"
         onClick={async () => {
-          await navigator.share({
-            title: "PWA Install Test",
-            text: "Install the PWA Install Test app",
-            url: window.location.href,
-          });
+  try {
+    await navigator.share({
+      url: window.location.href,
+    });
+  } catch (err) {
+    // AbortError = user dismissed the sheet, ignore it
+    if ((err as DOMException).name !== "AbortError") {
+      console.error(err);
+    }
+  }
 
-          setShowIosInstall(false);
-        }}
+  setShowIosInstall(false);
+}}
         className="mt-6 w-full rounded-xl bg-black px-6 py-3 font-semibold text-white"
       >
         INSTALL
