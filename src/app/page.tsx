@@ -15,6 +15,7 @@ export default function Home() {
     useState<BeforeInstallPromptEvent | null>(null);
   const [showAndroidInstall, setShowAndroidInstall] =
   useState(false);
+  const [showIosInstall, setShowIosInstall] = useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (
@@ -58,7 +59,25 @@ export default function Home() {
   //   }
   // };
 
-  const handleGet = () => {
+//   const handleGet = () => {
+//   if (!installPrompt) {
+//     alert("Install prompt is not available");
+//     return;
+//   }
+
+//   setShowAndroidInstall(true);
+// };
+
+const handleGet = () => {
+  const isIos =
+    /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+    !(window as any).MSStream;
+
+  if (isIos) {
+    setShowIosInstall(true);
+    return;
+  }
+
   if (!installPrompt) {
     alert("Install prompt is not available");
     return;
@@ -127,6 +146,44 @@ export default function Home() {
       <button
         type="button"
         onClick={() => setShowAndroidInstall(false)}
+        className="mt-3 w-full py-2 text-sm text-neutral-500"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
+
+{showIosInstall && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-6">
+    <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-black">
+      <h2 className="text-xl font-bold">
+        Almost there
+      </h2>
+
+      <p className="mt-3 text-sm leading-6 text-neutral-600">
+        Find and Tap Add to Home Screen in the next step.
+      </p>
+
+      <button
+        type="button"
+        onClick={async () => {
+          await navigator.share({
+            title: "PWA Install Test",
+            text: "Install the PWA Install Test app",
+            url: window.location.href,
+          });
+
+          setShowIosInstall(false);
+        }}
+        className="mt-6 w-full rounded-xl bg-black px-6 py-3 font-semibold text-white"
+      >
+        INSTALL
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setShowIosInstall(false)}
         className="mt-3 w-full py-2 text-sm text-neutral-500"
       >
         Cancel
