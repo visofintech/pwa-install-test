@@ -45,28 +45,7 @@ export default function Home() {
     };
   }, []);
 
-  // const handleGet = () => {
-  //   console.log("GET clicked");
 
-  //   if (installPrompt) {
-  //     alert(
-  //       "Install prompt is available"
-  //     );
-  //   } else {
-  //     alert(
-  //       "Install prompt is NOT available"
-  //     );
-  //   }
-  // };
-
-//   const handleGet = () => {
-//   if (!installPrompt) {
-//     alert("Install prompt is not available");
-//     return;
-//   }
-
-//   setShowAndroidInstall(true);
-// };
 
 const handleGet = () => {
   const isIos =
@@ -85,6 +64,13 @@ const handleGet = () => {
 
   setShowAndroidInstall(true);
 };
+
+// const handleGet = () => {
+ 
+//      setShowAndroidInstall(true);
+//      //setShowIosInstall(true);
+  
+// };
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-black px-6 text-white">
@@ -111,15 +97,26 @@ const handleGet = () => {
 
       {showAndroidInstall && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-6">
-    <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-black">
-      <h2 className="text-xl font-bold">
-        Install PWA Install Test
-      </h2>
+    <div className="w-full max-w-sm rounded-3xl bg-gray-900 p-4 text-white">
+      {/* App identity */}
+      <div className="flex items-center gap-4">
+        <img
+          src="/icons/icon-192.png"
+          alt="Forelity"
+          className="h-12 w-12 rounded-2xl"
+        />
 
-      <p className="mt-3 text-sm leading-6 text-neutral-600">
-        Install the app on your phone for a faster
-        experience.
-      </p>
+        <div>
+          <h2 className="text-lg font-bold">
+            Forelity
+          </h2>
+          <p className="mt-0 text-sm text-neutral-400">
+            Know your personal timing
+          </p>
+        </div>
+      </div>
+
+      
 
       <button
         type="button"
@@ -138,7 +135,8 @@ const handleGet = () => {
 
   setShowAndroidInstall(false);
 }}
-        className="mt-6 w-full rounded-xl bg-black px-6 py-3 font-semibold text-white"
+        className="mt-6 w-full rounded-xl px-6 py-3 font-semibold"
+        style={{ backgroundColor: '#263B8F', color: '#E0A83C'}}
       >
         INSTALL
       </button>
@@ -146,7 +144,8 @@ const handleGet = () => {
       <button
         type="button"
         onClick={() => setShowAndroidInstall(false)}
-        className="mt-3 w-full py-2 text-sm text-neutral-500"
+        className="mt-3 w-full py-2 text-sm text-neutral-300"
+        
       >
         Cancel
       </button>
@@ -156,43 +155,90 @@ const handleGet = () => {
 
 {showIosInstall && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-6">
-    <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-black">
-      <h2 className="text-xl font-bold">
-        Almost there
-      </h2>
+    <div className="w-full max-w-sm rounded-3xl bg-gray-900 p-4 text-white">
 
-      <p className="mt-3 text-sm leading-6 text-neutral-600">
-        Find and Tap Add to Home Screen in the next step.
-      </p>
+      {/* App identity */}
+      <div className="flex items-center gap-4">
+        <img
+          src="/icons/icon-192.png"
+          alt="Forelity"
+          className="h-12 w-12 rounded-2xl"
+        />
 
-      <button
-        type="button"
-        onClick={async () => {
-  try {
-    await navigator.share({
-      url: window.location.href,
-    });
-  } catch (err) {
-    // AbortError = user dismissed the sheet, ignore it
-    if ((err as DOMException).name !== "AbortError") {
-      console.error(err);
-    }
-  }
+        <div>
+          <h2 className="text-lg font-bold">
+            Forelity
+          </h2>
+          <p className="mt-0 text-sm text-neutral-400">
+            Know your personal timing
+          </p>
+        </div>
+      </div>
 
-  setShowIosInstall(false);
-}}
-        className="mt-6 w-full rounded-xl bg-black px-6 py-3 font-semibold text-white"
-      >
-        INSTALL
-      </button>
+      <div className="w-full bg-gray-600 mt-5" style={{height: '0.5px'}}></div>
+      <p className="mt-3 text-sm text-gray-200 text-center">
+            A few quick steps to install. Follow the instructions below
+          </p>
+      <div className="w-full bg-gray-600 mt-3" style={{height: '0.5px'}}></div>
 
+      {/* Instructions */}
+      <div className="mt-3 space-y-3">
+
+        {/* Share */}
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+             
+            >
+               <path fill="#ffffff" d="M5.5 23c-0.4 0 -0.75 -0.15 -1.05 -0.45 -0.3 -0.3 -0.45 -0.65 -0.45 -1.05V8.775c0 -0.4 0.15 -0.75 0.45 -1.05 0.3 -0.3 0.65 -0.45 1.05 -0.45h4.225v1.5H5.5V21.5h13V8.775h-4.275v-1.5H18.5c0.4 0 0.75 0.15 1.05 0.45 0.3 0.3 0.45 0.65 0.45 1.05V21.5c0 0.4 -0.15 0.75 -0.45 1.05 -0.3 0.3 -0.65 0.45 -1.05 0.45H5.5Zm5.725 -7.675V3.9l-2.2 2.2 -1.075 -1.075L11.975 1 16 5.025l-1.075 1.075 -2.2 -2.2v11.425h-1.5Z" stroke-width="0.5"></path>
+            </svg>
+          </div>
+
+          <p className="text-[15px] leading-5">
+            Press <strong>Share</strong> in Navigation Bar
+          </p>
+        </div>
+
+        {/* Add to Home Screen */}
+        <div className="flex items-center gap-4">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl ">
+            <svg
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <rect x="4" y="4" width="16" height="16" rx="3" />
+              <path d="M12 8v8" />
+              <path d="M8 12h8" />
+            </svg>
+          </div>
+
+          <p className="text-[15px] leading-5">
+            Scroll down to <strong>Add to Home Screen</strong> and tap
+          </p>
+        </div>
+
+      </div>
+
+      {/* Close */}
       <button
         type="button"
         onClick={() => setShowIosInstall(false)}
-        className="mt-3 w-full py-2 text-sm text-neutral-500"
+        className="mt-8 w-full rounded-lg px-6 py-3 font-semibold"
+        style={{ backgroundColor: '#263B8F', color: '#E0A83C'}}
       >
-        Cancel
+        OK, GOT IT
       </button>
+
     </div>
   </div>
 )}
