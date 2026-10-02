@@ -1,5 +1,4 @@
 {
- "id": "/", 
   "name": "PWA Install Test",
   "short_name": "PWA Test",
   "description": "Testing custom PWA installation flow",

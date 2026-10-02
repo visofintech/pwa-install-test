@@ -13,6 +13,8 @@ type BeforeInstallPromptEvent = Event & {
 export default function Home() {
   const [installPrompt, setInstallPrompt] =
     useState<BeforeInstallPromptEvent | null>(null);
+  const [showAndroidInstall, setShowAndroidInstall] =
+  useState(false);
 
   useEffect(() => {
     const handleBeforeInstallPrompt = (
@@ -57,16 +59,12 @@ export default function Home() {
   // };
 
   const handleGet = () => {
-  alert(
-    "secure: " +
-      window.isSecureContext +
-      "\nserviceWorker: " +
-      ("serviceWorker" in navigator) +
-      "\nstandalone: " +
-      window.matchMedia("(display-mode: standalone)").matches +
-      "\ninstallPrompt: " +
-      (installPrompt ? "YES" : "NO")
-  );
+  if (!installPrompt) {
+    alert("Install prompt is not available");
+    return;
+  }
+
+  setShowAndroidInstall(true);
 };
 
   return (
@@ -91,6 +89,51 @@ export default function Home() {
         </button>
 
       </div>
+
+      {showAndroidInstall && (
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-6">
+    <div className="w-full max-w-sm rounded-2xl bg-white p-6 text-black">
+      <h2 className="text-xl font-bold">
+        Install PWA Install Test
+      </h2>
+
+      <p className="mt-3 text-sm leading-6 text-neutral-600">
+        Install the app on your phone for a faster
+        experience.
+      </p>
+
+      <button
+        type="button"
+        onClick={async () => {
+  if (!installPrompt) return;
+
+  await installPrompt.prompt();
+
+  const choice = await installPrompt.userChoice;
+
+  if (choice.outcome === "accepted") {
+    console.log("App installed");
+  } else {
+    console.log("Installation dismissed");
+  }
+
+  setShowAndroidInstall(false);
+}}
+        className="mt-6 w-full rounded-xl bg-black px-6 py-3 font-semibold text-white"
+      >
+        INSTALL
+      </button>
+
+      <button
+        type="button"
+        onClick={() => setShowAndroidInstall(false)}
+        className="mt-3 w-full py-2 text-sm text-neutral-500"
+      >
+        Cancel
+      </button>
+    </div>
+  </div>
+)}
 
     </main>
   );
